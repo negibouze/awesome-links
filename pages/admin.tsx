@@ -133,6 +133,7 @@ const Admin = () => {
 
 export default Admin;
 
+// pages/admin.tsx
 export const getServerSideProps = async ({ req, res }) => {
   const session = getSession(req, res);
 
@@ -141,6 +142,26 @@ export const getServerSideProps = async ({ req, res }) => {
       redirect: {
         permanent: false,
         destination: "/api/auth/login",
+      },
+      props: {},
+    };
+  }
+
+  const user = await prisma.user.findUnique({
+    select: {
+      email: true,
+      role: true,
+    },
+    where: {
+      email: session.user.email,
+    },
+  });
+
+  if (user.role !== "ADMIN") {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/404",
       },
       props: {},
     };
