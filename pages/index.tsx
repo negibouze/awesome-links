@@ -1,7 +1,7 @@
-import Head from 'next/head';
-import { gql, useQuery } from '@apollo/client';
-import Link from 'next/link';
-import { AwesomeLink } from '../components/AwesomeLink';
+import Head from "next/head";
+import { gql, useQuery } from "@apollo/client";
+import Link from "next/link";
+import { AwesomeLink } from "../components/AwesomeLink";
 
 const AllLinksQuery = gql`
   query allLinksQuery($first: Int, $after: String) {
@@ -44,18 +44,15 @@ function Home() {
       <div className="container mx-auto max-w-5xl my-20 px-5">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {data?.links.edges.map(({ node }, i) => (
-            <Link href={`/link/${node.id}`} key={i}>
-              <a>
-                <AwesomeLink
-                  title={node.title}
-                  category={node.category}
-                  url={node.url}
-                  id={node.id}
-                  description={node.description}
-                  imageUrl={node.imageUrl}
-                />
-              </a>
-            </Link>
+            <AwesomeLink
+              key={i}
+              title={node.title}
+              category={node.category}
+              url={node.url}
+              id={node.id}
+              description={node.description}
+              imageUrl={node.imageUrl}
+            />
           ))}
         </div>
         {hasNextPage ? (
